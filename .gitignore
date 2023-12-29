@@ -1,0 +1,17 @@
+.env
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.env
+*.test
+*.out
+.idea/
+vendor/
+.vscode/
+tmp/
+.venv
+venv/
+__pycache__
+.pytest_cache
