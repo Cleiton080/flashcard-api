@@ -1,0 +1,26 @@
+FROM python:3.10-alpine
+
+WORKDIR /app
+
+COPY requirements.txt ./
+
+RUN pip3 install --no-cache-dir wheel
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 5000
+
+ENV PYTHONUNBUFFERED 1
+
+ENV FLASK_APP='app'
+ENV FLASK_ENV='development'
+ENV FLASK_DEBUG=1
+ENV MASTER_DB_NAME=${MASTER_DB_NAME}
+ENV MASTER_DB_USER=${MASTER_DB_USER}
+ENV MASTER_DB_PASSWORD=${MASTER_DB_PASSWORD}
+ENV MASTER_DB_HOST=${MASTER_DB_HOST}
+ENV MASTER_DB_PORT=${MASTER_DB_PORT}
+ENV MASTER_DB_LOG_MODE=${MASTER_DB_LOG_MODE}
+
+CMD ["flask", "run","--host=0.0.0.0"]
