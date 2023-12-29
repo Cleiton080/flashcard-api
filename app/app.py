@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
 from app.resources.user import UserRegister, UserLogin
+from app.resources.deck import Deck, DeckCollection
 from app.config.config import postgresqlConfig
 
 app = Flask(__name__)
@@ -29,6 +30,9 @@ def create_tables():
 
 api.add_resource(UserRegister, '/auth/register', methods=['POST'])
 api.add_resource(UserLogin, '/auth/login', methods=['POST'])
+
+api.add_resource(DeckCollection, '/deck', methods=['POST', 'GET'])
+api.add_resource(Deck, '/deck/<deck_id>', methods=['GET', 'PUT', 'DELETE'])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000',debug=True)
