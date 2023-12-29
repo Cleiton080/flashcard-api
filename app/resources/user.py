@@ -1,12 +1,11 @@
-from flask_restful import Resource, reqparse
-from flask import jsonify
-from flask_jwt_extended import create_access_token, jwt_required
-from flask_jwt_extended import current_user
-from app.models.user import UserModel
-from app.util.encoder import AlchemyEncoder
 import json
+from flask import jsonify
+from flask_restful import Resource, reqparse
+from flask_jwt_extended import create_access_token
+from app.util.encoder import AlchemyEncoder
 from app.util.logz import create_logger
 from app.config.db import db
+from app.models import UserModel
 
 
 class UserLogin(Resource):

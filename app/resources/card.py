@@ -1,9 +1,9 @@
-from flask_restful import Resource, reqparse
-from app.models.card import CardModel
-from flask_jwt_extended import jwt_required
 from app.config.db import db
+from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 from app.util.logz import create_logger
-from flask import jsonify
+from flask import jsonify, request
+from app.models import CardModel
 
 class CardCollection(Resource):
     def __init__(self):
@@ -11,7 +11,9 @@ class CardCollection(Resource):
 
     @jwt_required()
     def get(self):
-        cards = CardModel.query.all()
+        review = request.args.get('review', '').lower()
+
+        cards = CardModel.get_cards_for_review() if review == 'true' else CardModel.query.all()
         return jsonify(cards=[card.serialize() for card in cards])
 
     @jwt_required()

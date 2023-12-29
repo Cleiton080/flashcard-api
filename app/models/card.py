@@ -38,6 +38,16 @@ class CardModel(db.Model):
         return cls.query.filter_by(id=_id).first()
 
     @classmethod
+    def get_cards_for_review(cls):
+        current_date = datetime.utcnow()
+        return CardModel.query.filter(
+                (
+                    (CardModel.due <= current_date) |
+                    (CardModel.due == None)
+                )
+            ).all()
+
+    @classmethod
     def delete(cls, deck):
         db.session.delete(deck)
         db.session.commit()

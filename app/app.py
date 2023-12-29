@@ -6,6 +6,7 @@ from flask_restful import Api
 from app.resources.user import UserRegister, UserLogin
 from app.resources.deck import Deck, DeckCollection
 from app.resources.card import Card, CardCollection
+from app.resources.review import Review, ReviewCollection
 from app.config.config import postgresqlConfig
 
 app = Flask(__name__)
@@ -37,6 +38,9 @@ api.add_resource(Deck, '/deck/<deck_id>', methods=['GET', 'PUT', 'DELETE'])
 
 api.add_resource(CardCollection, '/card', methods=['POST', 'GET'])
 api.add_resource(Card, '/card/<card_id>', methods=['GET', 'PUT', 'DELETE'])
+
+api.add_resource(ReviewCollection, '/review', methods=['POST', 'GET'])
+api.add_resource(Review, '/review/<review_id>', methods=['GET'])
 
 
 if __name__ == '__main__':

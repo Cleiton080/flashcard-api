@@ -1,8 +1,8 @@
-from flask_restful import Resource, reqparse
-from app.models.deck import DeckModel
-from flask_jwt_extended import jwt_required
 from app.config.db import db
+from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 from app.util.logz import create_logger
+from app.models import DeckModel
 
 from flask import jsonify
 
