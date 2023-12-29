@@ -1,6 +1,7 @@
 import json
 
 from app.util.encoder import AlchemyEncoder
+from sqlalchemy.dialects.postgresql import UUID
 
 from app.config.db import db
 
@@ -10,7 +11,7 @@ from uuid import uuid4
 class DeckModel(db.Model):
     __tablename__ = 'decks'
 
-    id = db.Column(db.String(36), primary_key=True, default=str(uuid4()))
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name = db.Column(db.String(100), nullable=False)
     learning_step_again = db.Column(db.Integer, default=1)
     learning_step_good = db.Column(db.Integer, default=10)
