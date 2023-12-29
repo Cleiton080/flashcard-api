@@ -4,6 +4,7 @@ from app.config.db import db
 from datetime import datetime
 from uuid import uuid4
 from app.util.encoder import AlchemyEncoder
+from app.enum import ReviewAnswerEnum
 
 class ReviewModel(db.Model):
     __tablename__ = 'reviews'
@@ -11,13 +12,13 @@ class ReviewModel(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     delay_response = db.Column(db.Interval)
     card_id = db.Column(UUID(as_uuid=True), db.ForeignKey('cards.id'), primary_key=True)
-    review_answear_id = db.Column(UUID(as_uuid=True), db.ForeignKey('review_answears.id'), nullable=False)
+    review_answer = db.Column(db.Enum(ReviewAnswerEnum), nullable=False)
     created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True)
 
-    def __init__(self, card_id, review_answear_id, delay_response):
+    def __init__(self, card_id, review_answer, delay_response):
         self.card_id = card_id
-        self.review_answear_id = review_answear_id
+        self.review_answer = review_answer
         self.delay_response = delay_response
 
     def save_to_db(self):

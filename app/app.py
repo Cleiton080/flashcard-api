@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = postgresqlConfig
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["JWT_SECRET_KEY"] = "JWT123SACRETKEY"
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
 
 app.config.from_pyfile('config/config.py')
 
