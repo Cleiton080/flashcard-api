@@ -1,8 +1,11 @@
+from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from app.config.db import db
 from datetime import datetime
 from uuid import uuid4
 from app.enum import ReviewAnswerEnum
+from app.models import CardModel, DeckModel, UserModel
+from sqlalchemy.orm import joinedload
 
 class ReviewModel(db.Model):
     __tablename__ = 'reviews'
@@ -13,6 +16,8 @@ class ReviewModel(db.Model):
     review_answer = db.Column(db.Enum(ReviewAnswerEnum), nullable=False)
     created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True)
+
+    card = relationship("CardModel", back_populates="reviews")
 
     def __init__(self, card_id, review_answer, delay_response):
         self.card_id = card_id
@@ -28,8 +33,29 @@ class ReviewModel(db.Model):
         return ReviewSchema().dump(self)
 
     @classmethod
-    def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+    def find(cls, user_id):
+        return (
+            cls.query
+            .join(CardModel)
+            .join(DeckModel)
+            .join(UserModel)
+            .filter(UserModel.id == user_id)
+            .options(joinedload(cls.card).joinedload(CardModel.deck).joinedload(DeckModel.user))
+            .all()
+        )
+
+    @classmethod
+    def find_by_id(cls, _id, user_id):
+        return (
+            cls.query
+            .join(CardModel)
+            .join(DeckModel)
+            .join(UserModel)
+            .filter(UserModel.id == user_id)
+            .filter(cls.id == _id)
+            .options(joinedload(cls.card).joinedload(CardModel.deck).joinedload(DeckModel.user))
+            .all()
+        )
 
     @classmethod
     def delete(cls, deck):

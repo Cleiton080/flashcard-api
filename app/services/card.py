@@ -7,8 +7,8 @@ from app.services.review import ReviewService
 
 class CardService:
     @staticmethod
-    def process_review(card_id, card_answer):
-        card = CardModel.find_by_id(card_id)
+    def process_review(card_id, card_answer, user_id):
+        card = CardModel.find_by_id(card_id, user_id)
 
         if not ReviewService.can_review_card(card):
             raise CannotReviewCard()

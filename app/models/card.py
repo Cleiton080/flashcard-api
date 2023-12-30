@@ -24,6 +24,7 @@ class CardModel(db.Model):
     updated_at = db.Column(db.TIMESTAMP, nullable=True)
 
     deck = relationship("DeckModel", back_populates="cards")
+    reviews = relationship("ReviewModel", back_populates="card")
     
     def __init__(self, front, back, deck_id, due = None):
         self.front = front
