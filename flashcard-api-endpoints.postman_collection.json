@@ -1,0 +1,472 @@
+{
+	"info": {
+		"_postman_id": "82da325f-f4f9-48b7-82fb-ef27a4b78b62",
+		"name": "flashcard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25913792"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"cleiton\",\n    \"password\": \"futuro123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"cleiton\",\n    \"password\": \"futuro123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "deck",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/deck",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"deck"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "describe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/deck/:deck_id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"deck",
+								":deck_id"
+							],
+							"variable": [
+								{
+									"key": "deck_id",
+									"value": "50c7f7de-a3c5-492a-bae0-e9bfdd1c542b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"english\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/deck",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"deck"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"english-editado\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/deck/:deck_id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"deck",
+								":deck_id"
+							],
+							"variable": [
+								{
+									"key": "deck_id",
+									"value": "24352c59-d363-4910-ac7f-2918aca30118"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/deck/:deck_id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"deck",
+								":deck_id"
+							],
+							"variable": [
+								{
+									"key": "deck_id",
+									"value": "24352c59-d363-4910-ac7f-2918aca30118"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "card",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/card?review=true",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"card"
+							],
+							"query": [
+								{
+									"key": "review",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "describe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/card/:card_id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"card",
+								":card_id"
+							],
+							"variable": [
+								{
+									"key": "card_id",
+									"value": "e1ff3ea1-ceea-4aeb-af0f-3a0da41a9c2e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"front\": \"Bedroom\",\n    \"back\": \"Quarto\",\n    \"deck_id\": \"50c7f7de-a3c5-492a-bae0-e9bfdd1c542b\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/card",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"card"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"front\": \"Hello\",\n    \"back\": \"Olá\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/card/:card_id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"card",
+								":card_id"
+							],
+							"variable": [
+								{
+									"key": "card_id",
+									"value": "84c010f7-9889-4873-b296-46ddf5d39923"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/card/:card_id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"card",
+								":card_id"
+							],
+							"variable": [
+								{
+									"key": "card_id",
+									"value": "84c010f7-9889-4873-b296-46ddf5d39923"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "review",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"delay_response\": \"5 minutes\",\n    \"card_id\": \"e1ff3ea1-ceea-4aeb-af0f-3a0da41a9c2e\",\n    \"review_answer\": \"GOOD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/review",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/review",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "describe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/review/:review",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"review",
+								":review"
+							],
+							"variable": [
+								{
+									"key": "review",
+									"value": "c78e0a74-0485-4a13-8152-94fb537a24ff"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMzk2MDUxNSwianRpIjoiZjI3NDMwMjctZjFhZS00MjU3LWFkMzEtNzQ0NTM3MjhlNTdjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJpZCI6IjYyZmNiZDQ4LTY5ZGUtNGUzMC04NmFlLTY3NGM3MjRjMjVjNCIsInVzZXJuYW1lIjoiY2xlaXRvbiIsInBhc3N3b3JkIjoicGJrZGYyOnNoYTI1NjoyNjAwMDAkUDFvRDJIVTF4cGZFQUxSUyQ0ZDJhZmM4ZGNhMTU4Mjk1ZjVlZDg4N2M3YWZkZmQ5Y2JkYTgzNzY2YWQ1ZmJlMDJmOTVlODNlZDA4OTIzZGU5In0sIm5iZiI6MTcwMzk2MDUxNSwiZXhwIjoxNzA0MDQ2OTE1fQ.x-PCwtue8rReQzueLj9VnWQachct5p58uXAtdr4SCDQ",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:5000/api/v1",
+			"type": "string"
+		}
+	]
+}
