@@ -35,9 +35,21 @@ class CardModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def serialize(self):
+    def serialize(self, properties={}):
         from app.schemas import CardSchema
-        return CardSchema().dump(self)
+        return CardSchema(**properties).dump(self)
+
+    @classmethod
+    def find(cls, user_id):
+        return (
+            cls.query
+            .join(DeckModel)
+            .join(UserModel)
+            .filter(UserModel.id == user_id)
+            .options(joinedload(cls.deck).joinedload(DeckModel.user))
+            .all()
+        )
+
 
     @classmethod
     def find_by_id(cls, _id, user_id):
@@ -52,14 +64,21 @@ class CardModel(db.Model):
         )
 
     @classmethod
-    def get_cards_for_review(cls):
+    def get_cards_for_review(cls, user_id):
         current_date = datetime.utcnow()
-        return CardModel.query.filter(
-                (
+
+        return (
+            cls.query
+            .join(DeckModel)
+            .join(UserModel)
+            .filter(UserModel.id == user_id)
+            .filter((
                     (CardModel.due <= current_date) |
                     (CardModel.due == None)
-                )
-            ).all()
+                ))
+            .options(joinedload(cls.deck).joinedload(DeckModel.user))
+            .all()
+        )
 
     @classmethod
     def delete(cls, deck):
