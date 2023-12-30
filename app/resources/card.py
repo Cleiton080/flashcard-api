@@ -1,6 +1,6 @@
 from app.config.db import db
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.util.logz import create_logger
 from flask import jsonify, request
 from app.models import CardModel
@@ -34,7 +34,9 @@ class Card(Resource):
 
     @jwt_required()
     def get(self, card_id):
-        card = CardModel.find_by_id(card_id)
+        user = get_jwt_identity()
+
+        card = CardModel.find_by_id(card_id, user['id'])
         if not card:
             return {'message': 'Card not found'}, 404
         return jsonify(card.serialize())

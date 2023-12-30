@@ -1,10 +1,8 @@
-import json
-
-from app.util.encoder import AlchemyEncoder
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 from app.config.db import db
-
+from app.models import DeckModel, UserModel
+from sqlalchemy.orm import joinedload
 from datetime import datetime
 from uuid import uuid4
 from app.enum import CardStageEnum
@@ -38,11 +36,20 @@ class CardModel(db.Model):
         db.session.commit()
 
     def serialize(self):
-        return json.loads(json.dumps(self, cls=AlchemyEncoder))
+        from app.schemas import CardSchema
+        return CardSchema().dump(self)
 
     @classmethod
-    def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+    def find_by_id(cls, _id, user_id):
+        return (
+            cls.query
+            .join(DeckModel)
+            .join(UserModel)
+            .filter(cls.id == _id)
+            .filter(UserModel.id == user_id)
+            .options(joinedload(cls.deck).joinedload(DeckModel.user))
+            .first()
+        )
 
     @classmethod
     def get_cards_for_review(cls):

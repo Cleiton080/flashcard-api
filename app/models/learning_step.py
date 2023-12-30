@@ -1,7 +1,5 @@
-import json
 from uuid import uuid4
 from app.config.db import db
-from app.util.encoder import AlchemyEncoder
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -24,8 +22,10 @@ class LearningStepModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
+
     def serialize(self):
-        return json.loads(json.dumps(self, cls=AlchemyEncoder))
+        from app.schemas import LearningStepSchema
+        return LearningStepSchema().dump(self)
 
     @classmethod
     def find_by_id(cls, _id):

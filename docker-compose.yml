@@ -1,23 +1,36 @@
 version: '3.9'
 services:
   postgres:
+    container_name: postgres
     image: postgres:16.1-alpine3.19
     restart: always
     environment:
       POSTGRES_PASSWORD: ${MASTER_DB_PASSWORD}
       POSTGRES_USER: ${MASTER_DB_USER}
       POSTGRES_DB: ${MASTER_DB_NAME}
+    networks:
+      - flashcard-postgres
     env_file:
-      - ./.env
+      - .env
     ports:
       - 5432:5432
 
   app:
+    container_name: flashcard-api
     build: ./app
     restart: always
+    networks:
+      - flashcard-cli
+      - flashcard-postgres
     ports:
       - 5000:5000
     volumes:
     - ./app:/app
     env_file:
     - .env
+
+networks:
+  flashcard-postgres:
+
+  flashcard-cli:
+    external: true

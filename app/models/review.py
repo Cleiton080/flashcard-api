@@ -1,9 +1,7 @@
-import json
 from sqlalchemy.dialects.postgresql import UUID
 from app.config.db import db
 from datetime import datetime
 from uuid import uuid4
-from app.util.encoder import AlchemyEncoder
 from app.enum import ReviewAnswerEnum
 
 class ReviewModel(db.Model):
@@ -26,7 +24,8 @@ class ReviewModel(db.Model):
         db.session.commit()
 
     def serialize(self):
-        return json.loads(json.dumps(self, cls=AlchemyEncoder))
+        from app.schemas import ReviewSchema
+        return ReviewSchema().dump(self)
 
     @classmethod
     def find_by_id(cls, _id):

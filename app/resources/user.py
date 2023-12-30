@@ -2,7 +2,6 @@ import json
 from flask import jsonify
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import create_access_token
-from app.util.encoder import AlchemyEncoder
 from app.util.logz import create_logger
 from app.config.db import db
 from app.models import UserModel
@@ -23,10 +22,11 @@ class UserLogin(Resource):
         username = data['username']
         password = data['password']
 
-        user = db.session.query(UserModel).filter_by(username=username).one_or_none()
+        user = UserModel.find_by_username(username)
+
         if not user or not user.check_password(password):
             return {'status': 'Login failed.'}, 401
-        access_token = create_access_token(identity=json.dumps(user, cls=AlchemyEncoder))
+        access_token = create_access_token(identity=user.serialize())
         return jsonify(
             token=access_token,
         )
